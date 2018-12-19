@@ -3,13 +3,12 @@
 # @Time    : 2018-12-18 10:59
 # @Author  : yuxuecheng
 # @Contact : yuxuecheng@xinluomed.com
-# @Site    : 
+# @Site    :
 # @File    : clean_duplicate_data_in_mysql.py
 # @Software: PyCharm
 # @Description 清除mysql数据库中重复的数据
 
 import os
-# import logging
 import MySQLdb
 import time
 from commons.logger_utils import LogUtils
@@ -55,6 +54,7 @@ def delete_record(conn, sql, table, hospital_id, patient_id):
         cursor.close()
         logging.info("clean {0} for {1} success, effected rows: {2}, description: {3}"
                      .format(table, patient_id, cursor.rowcount, cursor.description))
+        conn.commit()
     except MySQLdb.Error, e:
         logging.error("clean {0} for {1} failed".format(table, patient_id))
         logging.error(e.args)
@@ -70,17 +70,7 @@ def clean_demography(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_demography for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_demography for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_demography', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_symptom(conn, hospital_id, patient_id):
@@ -93,17 +83,7 @@ def clean_symptom(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_symptom for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_demography for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_symptom', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_personal_history(conn, hospital_id, patient_id):
@@ -116,17 +96,7 @@ def clean_personal_history(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_personal_history for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_personal_history for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_personal_history', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_physical_examination(conn, hospital_id, patient_id):
@@ -139,17 +109,7 @@ def clean_physical_examination(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_physical_examination for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_physical_examination for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_physical_examination', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_cost(conn, hospital_id, patient_id):
@@ -162,17 +122,7 @@ def clean_cost(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_cost for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_cost for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_cost', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_clinical_events(conn, hospital_id, patient_id):
@@ -185,17 +135,7 @@ def clean_clinical_events(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_clinical_events for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_clinical_events for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_clinical_events', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_zrsxzqxzl(conn, hospital_id, patient_id):
@@ -208,17 +148,7 @@ def clean_zrsxzqxzl(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_zrsxzqxzl for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_zrsxzqxzl for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_zrsxzqxzl', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_inpatient_has_bled(conn, hospital_id, patient_id):
@@ -231,17 +161,7 @@ def clean_inpatient_has_bled(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_inpatient_has_bled for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_inpatient_has_bled for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_inpatient_has_bled', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_inpatient_chads_vas(conn, hospital_id, patient_id):
@@ -254,17 +174,7 @@ def clean_inpatient_chads_vas(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_inpatient_chads_vas for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_inpatient_chads_vas for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_inpatient_chads_vas', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_checkout_result(conn, hospital_id, patient_id):
@@ -283,17 +193,7 @@ def clean_checkout_result(conn, hospital_id, patient_id):
             AND tsi.HOSPITAL_ID = "{1}" 
         ) t1 ON tcr.ID = t1.CHECKOUT_RESULT_ID;
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_checkout_result for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_checkout_result for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_checkout_result', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_examination_result(conn, hospital_id, patient_id):
@@ -312,18 +212,7 @@ def clean_examination_result(conn, hospital_id, patient_id):
             AND tsi.HOSPITAL_ID = "{1}" 
         ) t1 ON ter.ID = t1.EXAMINATION_RESULT_ID;
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        cursor.execute(final_sql)
-        cursor.close()
-        conn.commit()
-        logging.info("clean_examination_result for {0} success,effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_examination_result for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_examination_result', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_treatment_result(conn, hospital_id, patient_id):
@@ -342,17 +231,7 @@ def clean_treatment_result(conn, hospital_id, patient_id):
             AND tsi.HOSPITAL_ID = "{1}" 
         ) t1 ON ttr.ID = t1.TREATMENT_RESULT_ID;
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_treatment_result for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_treatment_result for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_treatment_result', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_inpatient_result_ck(conn, hospital_id, patient_id):
@@ -365,17 +244,7 @@ def clean_inpatient_result_ck(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_inpatient_result_ck for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_inpatient_result_ck for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_inpatient_result_ck', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_inpatient_result_ex(conn, hospital_id, patient_id):
@@ -388,17 +257,7 @@ def clean_inpatient_result_ex(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_inpatient_result_ex for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_inpatient_result_ex for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_inpatient_result_ex', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_inpatient_result_tm(conn, hospital_id, patient_id):
@@ -411,17 +270,7 @@ def clean_inpatient_result_tm(conn, hospital_id, patient_id):
         tsi.id = "{0}" 
         AND tsi.HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_inpatient_result_tm for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_inpatient_result_tm for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_inpatient_result_tm', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_scene_inpatient(conn, hospital_id, patient_id):
@@ -433,25 +282,13 @@ def clean_scene_inpatient(conn, hospital_id, patient_id):
         ID = "{0}" 
         AND HOSPITAL_ID = "{1}";
     '''
-    try:
-        final_sql = sql.format(patient_id, hospital_id)
-        logging.debug(final_sql)
-        cursor = conn.cursor()
-        row_effected = cursor.execute(final_sql)
-        cursor.close()
-        logging.info("clean_scene_inpatient for {0} success, effected rows: {1}, description: {2}"
-                     .format(patient_id, cursor.rowcount, cursor.description))
-    except MySQLdb.Error, e:
-        logging.error("clean_scene_inpatient for {0} failed".format(patient_id))
-        logging.error(e.args)
+    delete_record(conn, sql, 'tqlh_scene_inpatient', hospital_id=hospital_id, patient_id=patient_id)
 
 
 def clean_data_by_id(conn, file_name):
-    if not os.path.exists(file_name):
-        logging.error('{0} is not exists'.format(file_name))
-        return
     with open(file_name, mode='r') as fd:
         for line in fd:
+            line = line.strip()
             logging.info(line)
             clean_demography(conn=conn, hospital_id="36", patient_id=line)
             clean_symptom(conn=conn, hospital_id="36", patient_id=line)
@@ -473,9 +310,9 @@ def clean_data_by_id(conn, file_name):
 
 if __name__ == '__main__':
     # init_logging('clean_duplicate_data_in_mysql_{0}.log'.format(time.strftime('%Y%m%d%H%M%S')))
-    # logfile_prefix = 'clean_duplicate_data_in_mysql_{0}'.format(time.strftime('%Y%m%d%H%M%S'))
-    logfile_prefix = 'clean_duplicate_data_in_mysql_{0}'.format(time.strftime('%Y%m%d'))
-    logging = LogUtils(file_name_prefix=logfile_prefix, file_path='../logs/', include_low_level=False)
+    logfile_prefix = 'clean_duplicate_data_in_mysql_{0}'.format(time.strftime('%Y%m%d%H%M%S'))
+    # logfile_prefix = 'clean_duplicate_data_in_mysql_{0}'.format(time.strftime('%Y%m%d'))
+    logging = LogUtils(file_name_prefix=logfile_prefix, include_low_level=False)
     host = 'localhost'
     port = 3306
     user_name = 'root'
