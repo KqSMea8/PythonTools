@@ -476,15 +476,10 @@ if __name__ == '__main__':
     # logfile_prefix = 'clean_duplicate_data_in_mysql_{0}'.format(time.strftime('%Y%m%d%H%M%S'))
     logfile_prefix = 'clean_duplicate_data_in_mysql_{0}'.format(time.strftime('%Y%m%d'))
     logging = LogUtils(file_name_prefix=logfile_prefix, file_path='../logs/', include_low_level=False)
-    host = '119.23.202.156'
-    port = 33966
-    user_name = 'af'
-    password = 'AFpassword@2qq'
-    database = 'af'
-    # host = 'rm-wz92074s538kj4os8jo.mysql.rds.aliyuncs.com'
-    # port = 3306
-    # user_name = 'xinluo'
-    # password = 'sahfu$%^TYBHIU746'
-    # database = 'af'
+    host = 'localhost'
+    port = 3306
+    user_name = 'root'
+    password = '123456'
+    database = 'test'
     conn = connect_mysql(host=host, port=port, password=password, user=user_name, database=database)
     clean_data_by_id(conn, 'duplicate_zyh_inpatient_id_test.txt')
