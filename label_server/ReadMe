@@ -1,0 +1,16 @@
+This document is about the project label server. This is used for TA product to query labels for user and query users for label.
+
+deployment:
+Just put this directory in any directory, leave the directory structure unmodified, and use the following command to start the server:
+1. change to root directory of this project
+2. if the start_server.sh script is not executable, use chmod +x start_server.sh to fix it.
+3. change the redis related variable in start_server.sh, include REDIS_HOST, REDIS_PORT and REDIS_AUTH, this is information about the redis server that store the user and label relationships.
+4. use ./start_server.sh label_server.py to start the server, and the log file is label_server.log in the current directory.
+
+script usage:
+1. start_server.sh: used to start the label server.
+2. label_server.py: used to handle the request from client. This is the main program of the project and supply the service.
+3. my_client.py: used to test the service of label server
+4. redis_tool.py: used to operate on redis server
+5. redis directory: This is the python redis client library
+6. tornado directory: This is the tornado framework library

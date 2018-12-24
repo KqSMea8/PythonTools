@@ -30,3 +30,19 @@ def connect_mysql(host='localhost', user='root', password='', database='', port=
                          charset=charset,
                          init_command='show tables;')
     return db
+
+
+def test():
+    conn = connect_mysql("192.168.56.103",3306,"root","Linus_dev!@#123","mysql")
+    cursor = conn.cursor()
+    cursor.execute("show databases")
+    ret = cursor.fetchall()
+    for i in ret:
+        print i
+
+    cursor.close()
+    conn.close()
+
+
+if __name__ == "__main__":
+    test()

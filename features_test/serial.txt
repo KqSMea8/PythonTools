@@ -1,0 +1,11 @@
+(lp0
+S'hello'
+p1
+aI42
+a(lp2
+I1
+aS'two'
+p3
+aaS'apple'
+p4
+a.

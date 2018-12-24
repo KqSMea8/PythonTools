@@ -1,0 +1,4 @@
+#value format: string-appkey-appsecret
+string-ta10086-ta&bmcc!@#
+string-bcdata-bcdata@2701
+string-linus-test@7701
