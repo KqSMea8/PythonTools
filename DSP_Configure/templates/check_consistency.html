@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>DSP配置文件一致性校验</title>
+    <style type="text/css">
+        thead {color:green}
+        tbody {color:blue;height:50px}
+        tfoot {color:red}
+        
+</style>
+    <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript">
+		$(function () {
+			$( "#check_consistency_form" ).submit(function (event) {
+				// Stop form from submiiting normally, 下面这行注释掉会请求两次submit_conf.html,然后第二次应为没有conf参数报400错误
+				event.preventDefault();
+				
+				// Get some values from elements on the pages;
+				//var filename = ($("input[name='file_name']:checked").val());
+				//var servername = ($("input[name='server_name']:checked").val());
+				var filename = $("input[name='file_name']:checked").val();
+				var servername = $("input[name='server_name']:checked").val();
+				var $form = $( this );
+				var	url = $form.attr("action");
+				
+				if ((typeof(filename) == "undefined") || (typeof(servername) == "undefined"))
+				{
+					alert("Must choose one file name and one server name")
+					return
+				}
+				// Send the data using post
+				// alert(filename)
+				// alert(servername)
+				// alert(url)
+				$.post( url, 
+				{
+					filename:filename, 
+					servername:servername
+				},
+				function (data, status)
+				{
+					if (status == "success")
+					{
+					    if (data.result == 0)
+						{
+							alert("same")
+						}
+						else
+						{
+							alert("different")
+							alert(data.difference)
+						}
+					}
+				}
+				);
+			});
+		});
+        function getChoices() {
+            var filename = ($("input[name='file_name']:checked").val());
+            var servername = ($("input[name='server_name']:checked").val());
+			if (typeof(filename) != "undefined")
+			{
+				alert(filename)
+			}
+			if (typeof(servername) != "undefined")
+			{
+				alert(servername)
+			}				
+        }
+		
+		function CheckConf() {
+            var filename = ($("input[name='file_name']:checked").val());
+            var servername = ($("input[name='server_name']:checked").val());
+			if ((typeof(filename) == "undefined") || (typeof(servername) == "undefined"))
+			{
+				//alert("Must choose one file name and one server name")
+				return
+			}
+			if (typeof(servername) != "undefined")
+			{
+				alert(servername)
+			}				
+        }		
+        
+</script>
+  </head>
+  <body>
+    <form method="post" action="/check_consistency.html" id="check_consistency_form">
+      <table border="1">
+        <caption>DSP文件服务器选择</caption>
+        <thead>
+          <tr>
+            <th>file name</th>
+            <th>server name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <form>
+			  {% for filename in filenames %}
+				<input type="radio" name="file_name" value="{{ escape(filename) }}" /> {{ escape(filename) }}
+				<br />
+			  {% end %}
+			  <!--
+              <input type="radio" name="file_name" value="cache.conf" /> cache.conf
+              <br />
+              <input type="radio" name="file_name" value="nginx.conf" /> nginx.conf
+              <br />
+              <input type="radio" name="file_name" value="bidder.ini" /> bidder.ini
+			  -->
+			  </form>
+            </td>
+            <td>
+              <form>
+			  {% for servername in servernames %}
+				<input type="radio" name="server_name" value="{{ escape(servername) }}" /> {{ escape(servername) }}
+				<br />
+			  {% end %}
+			  <!--
+              <input type="radio" name="server_name" value="bidder2" /> bidder2
+              <br />
+              <input type="radio" name="server_name" value="bidder3" /> bidder3
+              <br />
+              <input type="radio" name="server_name" value="bidder4" /> bidder4
+              <br />
+              <input type="radio" name="server_name" value="bidder8" /> bidder8
+              <br />
+              <input type="radio" name="server_name" value="bidder10" /> bidder10
+              <br />
+              <input type="radio" name="server_name" value="bidder12" /> bidder12
+			  -->
+			  </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+	  <input type="submit" value="检查配置" />
+    </form>
+    <form>
+      <input type="button" onclick="getChoices()" value="查看选项" />
+    </form>
+  </body>
+</html>

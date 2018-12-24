@@ -1,0 +1,27 @@
+<html>
+  <title>DSP配置管理平台登录界面</title>
+  <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript">
+//<![CDATA[
+  $(function(){
+	$( "#login_form" ).submit(function (event) {
+		// Stop form from submiiting normally, 下面这行注释掉会请求两次submit_conf.html,然后第二次应为没有conf参数报400错误
+		event.preventDefault();
+		
+		// Get some values from elements on the pages;
+		var $form = $( this ),
+			username = $form.find("input[id='username']").val(),
+			url = $form.attr("action");
+		var posting = $.post( url, {username:username} );
+		window.location.href=url
+	});
+  });
+  //]]>
+  </script>
+<body>
+    <form id="login_form" action="/index.html" method="post">
+        Name: <input id="username" type="text" name="name">
+        <input type="submit" value="Sign in">
+    </form>
+</body>
+</html>

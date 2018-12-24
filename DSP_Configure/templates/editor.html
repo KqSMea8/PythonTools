@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>DSP配置文件编辑器</title>
+  <style type="text/css">
+/*<![CDATA[*/
+        textarea.normal 
+        {
+            height: 500px;
+            width: 800px;
+                        background-color:Aqua;
+        }
+  /*]]>*/
+  </style>
+  <script type="text/javascript" src="js/jquery-3.1.0.min.js">
+</script>
+  <script type="text/javascript">
+//<![CDATA[
+  $(function(){
+    <!-- $d = $("#conf_editor")[0].contentWindow.document; // IE、FF都兼容 -->
+        $d = $("#conf_editor");
+    var list = new Array();
+        {% for item in items %}
+                    temp = "{{ escape(item) }}";
+                                // alert(temp)
+                                list.push(temp);
+    {% end %}
+        $d.val(list.join("\n"));
+    
+    $('#insert_img').click(function(){
+        // 在iframe中插入一张图片                                    
+        var img = '<img src="' + $('#path').val() +'" />';
+        $("body", $d).append(img);
+    });
+    
+    $('#preview').click(function(){
+        // 获取iframe的body内容，用于显示或者插入到数据库
+        alert($('#conf_editor').val());
+        $('#preview_area').html($('#conf_editor').val().replace(/\r\n/g,"<br\/>"));
+    });
+        
+        $( "#conf_form" ).submit(function (event) {
+                // Stop form from submiiting normally, 下面这行注释掉会请求两次submit_conf.html,然后第二次应为没有conf参数报400错误
+                event.preventDefault();
+                
+                // Get some values from elements on the pages;
+                var $form = $( this ),
+                        term = $form.find("textarea[id='conf_editor']").val(),
+                        url = $form.attr("action"),
+                        filepath = "{{path}}";
+                
+                // Send the data using post
+                // alert(term)
+                // alert(url)
+                // alert(filepath)
+                $.post( url, 
+                {
+                        conf:term, 
+                        path:filepath
+                },
+                function(data, status)
+                {
+                        //alert("full_path: " + data.full_path + "\nstatus: " + status);
+                        if (status == "success")
+                        {
+                                alert("Submit success")
+                        }else
+                        {
+                                alert("Submit failed")
+                        }
+                });
+        });
+  });
+  function showConf() {
+                // 获取textarea的内容，用于显示或者插入到数据库
+        alert($("#conf_editor").val());
+                // 将textarea的内容置为空
+                // document.getElementById("conf_editor").value = "";
+  }
+
+  function submitConf() {
+                // 获取textarea的内容，用于显示或者插入到数据库
+        alert($("#conf_editor").val());
+                var form = document.getElementById("conf_form");
+                alert("Original action: " + form.action);
+                form.action = "submit_conf.html";
+                alert("New action: " + form.action);
+                form.submit();
+                document.getElementById("conf_editor").value = "";
+  }
+  //]]>
+  </script>
+</head>
+
+<body>
+  <form name="conf_form" method="post" action="/submit_conf.html" id="conf_form">
+    <p>
+    <textarea id="conf_editor" class="normal">
+</textarea></p><input type="button" onclick="showConf()" value="预览" /> <input type="submit" value="提交配置" />
+  </form>
+</body>
+</html>

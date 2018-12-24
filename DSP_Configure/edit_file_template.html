@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <textarea>
+            {% for line in content %}
+                {{ escape(line) }}
+            {% end %}
+        </textarea>
+    </body>
+</html>

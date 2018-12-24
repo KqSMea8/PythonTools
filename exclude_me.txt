@@ -1,0 +1,13 @@
+stuff_show_version.*
+monitor.py
+pack.sh
+pack_src.sh
+upgrade_script
+sync.sh
+.DS_Store
+bidder
+bidder_revision*
+.svn
+*.o
+exclude_me.txt
+logs

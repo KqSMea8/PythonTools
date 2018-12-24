@@ -1,0 +1,8 @@
+get_show_url.py:获取展示的url，输出的格式为访问时间,域名和URL，不过这个版本执行速度太慢，日志文件大了就不行了。
+get_show_url_count.py:获取展示的url及每个url的展示次数，同样执行速度太慢，日志文件大了就不行了。
+get_show_url_count_sortv.py:获取展示的url及每个url的展示次数，同样执行速度太慢，这个版本生成pushid的速度太慢，查找速度还可以，日志文件大了就不行了。
+get_unshow_url.py:获取未成功展示的url，输出的格式为访问时间,域名和URL，不过这个版本执行速度太慢，日志文件大了就不行了。
+get_unshow_url_count.py:获取未成功展示的url及每个url的未成功展示次数，同样执行速度太慢，日志文件大了就不行了。
+get_unshow_url_count_sortv.py:获取未成功展示的url及每个url的未成功展示次数，同样执行速度太慢，这个版本生成pushid的速度太慢，查找速度还可以，日志文件大了就不行了。
+get_url_count_sortv_mt.py:获取成功展示和未成功展示的url及每个url的次数。同样执行速度太慢，这个版本生成pushid的速度比非多线程版本快了不少，但是一天的日志要1个半小时，查找速度还可以，日志文件大了就不行了
+get_url_count_sortv_setv_mt.py:获取成功展示和未成功展示的url及每个url的次数的最终版本。执行速度比较快，一天的日志，对于投放量最大的广告（一天选出广告量250多W，展示量180多W），总共使用时间大概18分钟。
